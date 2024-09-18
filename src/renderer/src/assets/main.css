@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-imagen-login{
+  background-image: url('./taller-mecanico.webp');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.bg-imagen-home{
+  background-image: url('./taller-mecanico.webp');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container-pages{
+  @apply bg-fondo w-11/12 h-5/6 p-2 rounded-xl flex flex-col items-center justify-start
+}
+
+.input-text{
+  @apply bg-fondo px-2 py-1 rounded-lg border border-black
+}
+
+.form-filtros{
+  @apply flex flex-row items-end justify-between my-2 pb-2 border-b border-gray-400
+}
+.form-filtros > div{
+  @apply flex flex-col items-start justify-start
+}
+
+html::-webkit-scrollbar{
+  width: 20px;
+}
+
+html::-webkit-scrollbar-track {
+  /* background: rgb(197, 30, 25); */
+  background: black;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+      rgba(197, 30, 25, 1) 38%,
+      rgb(54, 40, 36) 54%,
+      rgb(25, 24, 24) 71%);
+  border-radius: 100px;
+}
+
+html {
+  overflow: hidden;
+}
