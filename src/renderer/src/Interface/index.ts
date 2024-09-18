@@ -6,6 +6,5 @@ export interface Context_Interface {
   data: {
     saldo: {data:number,state:React.Dispatch<React.SetStateAction<number>>    }
     operaciones: Operacion_Interface[];
-    anadir_operacion:(operacion: Operacion_Interface)=>void
   }
 }
