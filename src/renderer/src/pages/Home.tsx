@@ -1,19 +1,19 @@
 import { RootLayout } from '@renderer/components/AppLayout'
-import { AnimatePresence, motion } from 'framer-motion'
-import '../styles/styles.css'
-import { useContext, useState } from 'react'
-import { Operacion_Interface } from 'src/shared/types'
 import { Button_UI } from '@renderer/components/UI_Component'
 import { AppContext } from '@renderer/data/Store'
 import useCreateOperacion from '@renderer/hooks/useCreateOperacion'
 import useDeleteOperacion from '@renderer/hooks/useDeleteOperacion'
-import useEditOperacion from '@renderer/hooks/useEditOperacion'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useContext, useState } from 'react'
+import { Operacion_Interface } from 'src/shared/types'
+import '../styles/styles.css'
+import useUpdateSaldo from '@renderer/hooks/useUpdateSaldo'
 
 const Home = (): JSX.Element => {
   const {
     data: {
       saldo: { data: saldo, state: setSaldo },
-      operaciones
+      operaciones: { data: operaciones, state: setOperaciones }
     }
   } = useContext(AppContext)
 
@@ -45,14 +45,17 @@ const Home = (): JSX.Element => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     useCreateOperacion(operacion)
-      .then((response) => console.log(response))
+      .then((response) => setOperaciones((prev) => [...prev, response]))
       .catch((error) => console.error(error))
     setSaldo((prev) => prev + (operacion.ganancia - operacion.gasto))
+    useUpdateSaldo(saldo)
+      .then((response) => console.log(response))
+      .catch((error) => console.error(error))
   }
 
   const handleDelete = (id: number) => {
     useDeleteOperacion(id)
-      .then((response) => console.log(response))
+      .then(() => setOperaciones((prev) => prev.filter((item) => item.ID_Operacion !== id)))
       .catch((error) => console.error(error))
   }
 
@@ -148,17 +151,21 @@ const Home = (): JSX.Element => {
                     <li
                       onClick={() => setOperacion(item)}
                       key={item.ID_Operacion}
-                      className={`${item.ganancia > item.gasto ? 'bg-green-500' : 'bg-red-500'} w-1/2 px-2 py-1 mb-2 rounded-xl`}
+                      className={`${item.ganancia > item.gasto ? 'bg-green-500' : 'bg-red-500'} px-2 py-1 mb-2 rounded-xl flex flex-row items-center`}
                     >
                       <div className="contenedor-item-operaciones">
-                        <p>Fecha: </p>
+                        <p className="text-lg font-bold">Fecha: </p>
                         <span>{item.fecha.toLocaleDateString()}</span>
                       </div>
                       <div className="contenedor-item-operaciones">
-                        <p>Por ciento: </p>
+                        <p className="text-lg font-bold">Por ciento: </p>
                         <span>{' ' + item.porciento.toFixed(2)}%</span>
                       </div>
-                      <button onClick={() => handleDelete(item.ID_Operacion)}>Eliminar</button>
+                      <Button_UI
+                        type="button"
+                        texto="Eliminar"
+                        funcion={() => handleDelete(item.ID_Operacion)}
+                      />
                     </li>
                   ))}
                 </ul>
