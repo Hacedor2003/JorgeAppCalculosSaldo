@@ -18,10 +18,21 @@ const getSaldo = async () => {
 const updateSaldo = async (nuevaCantidad: number) => {
   const saldo = await Saldo.findOne();
   if (saldo) {
-    saldo.cantidad = nuevaCantidad
-    await saldo?.save()
+    const [updated] = await Saldo.update(
+      { cantidad: nuevaCantidad, ID_Saldo: saldo.dataValues.ID_Saldo },
+      {
+        where: { ID_Saldo: saldo.dataValues.ID_Saldo }
+      }
+    )
+    if (!updated) {
+      throw new Error('Saldo no encontrado o no se realizaron cambios');
+    }
+    const updatedOperacion = await getSaldo();
+    return updatedOperacion;
+  } else {
+    throw new Error('Saldo no encontrado')
   }
-  return saldo?.dataValues;
+  
 };
 
 // Eliminar el saldo (opcional, ten en cuenta que solo debe haber uno)

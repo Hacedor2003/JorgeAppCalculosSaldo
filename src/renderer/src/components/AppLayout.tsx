@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 export const RootLayout = ({ children }: ComponentProps<'main'>): JSX.Element => {
   return (
     <main className="w-full h-full bg-imagen-home flex flex-col items-center justify-start text-black select-none">
-      <Sidebar />
       {children}
     </main>
   )

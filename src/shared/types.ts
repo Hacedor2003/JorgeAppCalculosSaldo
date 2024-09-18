@@ -2,7 +2,7 @@
 import { Optional } from 'sequelize'
 
 export interface Operacion_Interface {
-  ID_Operacion: number;
+  ID_Operacion?: number;
   fecha: Date;
   ganancia: number;
   gasto: number;

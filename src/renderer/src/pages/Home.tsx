@@ -18,7 +18,6 @@ const Home = (): JSX.Element => {
   } = useContext(AppContext)
 
   const [operacion, setOperacion] = useState<Operacion_Interface>({
-    ID_Operacion: 0,
     gasto: 0,
     ganancia: 0,
     fecha: new Date(),
@@ -47,10 +46,12 @@ const Home = (): JSX.Element => {
     useCreateOperacion(operacion)
       .then((response) => setOperaciones((prev) => [...prev, response]))
       .catch((error) => console.error(error))
-    setSaldo((prev) => prev + (operacion.ganancia - operacion.gasto))
-    useUpdateSaldo(saldo)
-      .then((response) => console.log(response))
-      .catch((error) => console.error(error))
+    setSaldo((prev) => {
+      useUpdateSaldo(prev + (operacion.ganancia - operacion.gasto))
+        .then((response) => console.log(response))
+        .catch((error) => console.error(error))
+      return prev + (operacion.ganancia - operacion.gasto)
+    })
   }
 
   const handleDelete = (id: number) => {
