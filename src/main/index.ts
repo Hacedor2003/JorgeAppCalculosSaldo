@@ -11,45 +11,19 @@ import {
   updateOperacion
 } from './lib/Cruds_Operaciones'
 import { crearSaldo, deleteSaldo, getSaldo, updateSaldo } from './lib/Cruds_Saldo'
+import { MainScreen } from './MainScreen'
+import { autoUpdater } from 'electron-updater'
+
+//Basic flags
+autoUpdater.forceDevUpdateConfig = true
+autoUpdater.autoDownload = false
+autoUpdater.autoInstallOnAppQuit = true
+
+let mainWindow
 
 function createWindow(): void {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 1000,
-    show: false,
-    autoHideMenuBar: true,
-    /* ...(process.platform === 'linux' ? { icon } : {}), */
-    center: true,
-    title: 'Sistema de Mantenimiento',
-    frame: true,
-    vibrancy: 'under-window',
-    visualEffectState: 'active',
-    titleBarStyle: 'default',
-    trafficLightPosition: { x: 15, y: 10 },
-    webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
-      sandbox: true,
-      contextIsolation: true
-    }
-  })
-
-  mainWindow.on('ready-to-show', () => {
-    mainWindow.show()
-  })
-
-  mainWindow.webContents.setWindowOpenHandler((details) => {
-    shell.openExternal(details.url)
-    return { action: 'deny' }
-  })
-
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
-  } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
-  }
+  mainWindow = new MainScreen()
 }
 
 // This method will be called when Electron has finished
@@ -60,7 +34,7 @@ app.whenReady().then(async () => {
   await connectDB()
 
   // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron')
+  electronApp.setAppUserModelId('com.hacedor')
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
@@ -95,6 +69,28 @@ app.whenReady().then(async () => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+  autoUpdater.checkForUpdates()
+  mainWindow.showMessage(`Revisando actualizacion. Version Actual ${app.getVersion()}`)
+})
+
+/*New Update Available*/
+autoUpdater.on('update-available', () => {
+  mainWindow.showMessage(`Actualizacion disponible. Version Actual ${app.getVersion()}`)
+  const pth = autoUpdater.downloadUpdate()
+  mainWindow.showMessage(pth)
+})
+
+autoUpdater.on('update-not-available', () => {
+  mainWindow.showMessage(`No Actualizacion disponible. Version Actual ${app.getVersion()}`)
+})
+
+/*Download Completion Message*/
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.showMessage(`Descargando Actualizacion. Version Actual ${app.getVersion()}`)
+})
+
+autoUpdater.on('error', (info) => {
+  mainWindow.showMessage(info)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

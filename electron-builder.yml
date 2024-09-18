@@ -1,5 +1,5 @@
 appId: com.hacedor.calculosaldo
-productName: sistema-mantenimiento
+productName: calculo-saldo
 directories:
   buildResources: build
 files:
@@ -12,7 +12,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: sistema-mantenimiento
+  executableName: calculo-saldo
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
@@ -40,4 +40,4 @@ appImage:
 npmRebuild: false
 publish:
   provider: generic
-  url: https://github.com/Hacedor2003/sistema-mantenimiento-avitex/releases/download/1.0.0/
+  url: https://github.com/Hacedor2003/JorgeAppCalculosSaldo

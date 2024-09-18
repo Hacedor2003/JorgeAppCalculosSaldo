@@ -7,6 +7,11 @@ import {
 
 declare global {
   interface Window {
+    bridge: {
+      updateMessage: (
+        callback: (event: Electron.IpcRendererEvent, ...args: any[]) => void
+      ) => Electron.IpcRenderer
+    }
     context: {
       getAllOperaciones: () => Promise<Operacion_Interface[]>
       getOperacion_By_Id: (id: number) => Promise<Operacion_Interface>

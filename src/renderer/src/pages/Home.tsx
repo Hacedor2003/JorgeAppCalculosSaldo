@@ -1,4 +1,4 @@
-import { RootLayout } from '@renderer/components/AppLayout'
+import { RootLayout, updateMessage } from '@renderer/components/AppLayout'
 import { Button_UI } from '@renderer/components/UI_Component'
 import { AppContext } from '@renderer/data/Store'
 import useCreateOperacion from '@renderer/hooks/useCreateOperacion'
@@ -10,6 +10,7 @@ import '../styles/styles.css'
 import useUpdateSaldo from '@renderer/hooks/useUpdateSaldo'
 
 const Home = (): JSX.Element => {
+  window.bridge.updateMessage(updateMessage)
   const {
     data: {
       saldo: { data: saldo, state: setSaldo },
@@ -69,6 +70,7 @@ const Home = (): JSX.Element => {
         className="w-screen h-screen flex flex-col items-center justify-center"
       >
         <RootLayout>
+          <p id="message"></p>
           <main className="w-full h-full flex flex-col items-center justify-center p-2">
             <section className="w-11/12 h-full grid grid-cols-6 grid-rows-1 p-2 rounded-xl bg-fondo border-black">
               <form
