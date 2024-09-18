@@ -1,9 +1,8 @@
 {
-  "name": "sistema-mantenimiento",
+  "name": "calculo-saldo",
   "version": "1.0.0",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
-  "author": "example.com",
   "homepage": "https://electron-vite.org",
   "scripts": {
     "format": "prettier --write .",
@@ -65,5 +64,22 @@
     "typescript": "^5.3.3",
     "typescript-eslint": "^7.9.0",
     "vite": "^5.0.12"
-  }
+  },
+  "repository": "https://github.com/Hacedor2003/sistema-mantenimiento-avitex",
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
+  },
+  "build": {
+    "appId": "com.hacedor.calculosaldo",
+    "productName": "calculo-saldo",
+    "win": {
+      "target": "nsis"
+    },
+    "directories": {
+      "output": "dist"
+    }
+  },
+  "author": "Hacedor bryanlenier@gmail.com",
+  "license": "MIT"
 }
