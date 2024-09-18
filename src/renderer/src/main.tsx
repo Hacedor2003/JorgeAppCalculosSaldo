@@ -3,7 +3,7 @@ import './assets/main.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
-import { AppProvider } from './Data/Store'
+import { AppProvider } from './data/Store'
 import Home from './pages/Home'
 import ErrorPage from './pages/ErrorPage'
 

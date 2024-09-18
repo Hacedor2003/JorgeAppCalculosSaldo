@@ -4,48 +4,13 @@ import { join } from 'path'
 /* import icon from '../../resources/icon.png?asset' */
 import connectDB from './db/db'
 import {
-  createCliente,
-  createComponente,
-  createHistorial,
-  createHistorial_Acciones,
-  createProducto,
-  createUsuarios,
-  createVenta,
-  deleteCliente_By_Id,
-  deleteComponente_By_Id,
-  deleteHistorial_By_Id,
-  deleteProducto_By_Id,
-  deleteVenta_By_Id,
-  editCliente_By_Id,
-  editComponente_By_Id,
-  editHistorial_Venta_By_Id,
-  editProducto_By_Id,
-  editVenta_By_Id,
-  getAllHistorialAcciones,
-  getAllUsuarios,
-  getCliente_By_Id,
-  getClientes_All,
-  getComponente_By_Id,
-  getComponentes_All,
-  getHistorialAccion_By_Id,
-  getHistorial_Ventas_All,
-  getHistorial_Ventas_By_Cliente,
-  getHistorial_Ventas_By_Id,
-  getProductos_All,
-  getProductos_By_Id,
-  getUsuario_By_Id,
-  getVenta_By_Id,
-  getVentas_All
-} from './lib'
-import { editHistoria_Accciones_By_Id, editUsuario_By_Id } from './lib/Hook_Edit'
-import { Notifier } from './lib/Notifier'
-import {
+  createOperacion,
+  deleteOperacion,
   getAllOperaciones,
   getOperacionById,
-  deleteOperacion,
-  updateOperacion,
-  createOperacion
-} from './lib/CRUDS'
+  updateOperacion
+} from './lib/Cruds_Operaciones'
+import { crearSaldo, deleteSaldo, getSaldo, updateSaldo } from './lib/Cruds_Saldo'
 
 function createWindow(): void {
   // Create the browser window.
@@ -71,13 +36,6 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
-    const connectionString = 'postgres://postgres:123@localhost:5432/sistema-ventas'
-
-    /* Listen de la base de datos */
-    const notifier = new Notifier(connectionString)
-
-    notifier.connect()
-    notifier.listenForNotifications()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -112,16 +70,20 @@ app.whenReady().then(async () => {
   })
 
   // IPC
+  ipcMain.handle('crearSaldo', (_, saldo) => crearSaldo(saldo))
 
   // Get
   ipcMain.handle('getAllOperaciones', () => getAllOperaciones())
   ipcMain.handle('getOperacion_By_Id', (_, id) => getOperacionById(id))
+  ipcMain.handle('getSaldo', () => getSaldo())
 
   // Delete
   ipcMain.handle('deleteOperacion_By_Id', (_, id) => deleteOperacion(id))
+  ipcMain.handle('deleteSaldo_By_Id', (_) => deleteSaldo())
 
   // Edit
   ipcMain.handle('editOperacion_By_Id', (_, id, updated) => updateOperacion(id, updated))
+  ipcMain.handle('updateSaldo', (_, updated) => updateSaldo(updated))
 
   // Create
   ipcMain.handle('createOperacion', (_, newData) => createOperacion(newData))

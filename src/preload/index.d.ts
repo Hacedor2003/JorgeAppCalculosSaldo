@@ -16,6 +16,10 @@ declare global {
       ) => Promise<Operacion_Interface>
       deleteOperacion_By_Id: (id: number) => Promise<void>
       createOperacion: (data: Operacion_Interface) => Promise<Operacion_Interface>
+      crearSaldo: (cantidad: number) => Promise<Saldo_Interface>
+      getSaldo: () => Promise<Saldo_Interface | undefined>
+      updateSaldo: (nuevaCantidad: number) => Promise<Saldo_Interface | undefined>
+      deleteSaldo: () => Promise<void>
     }
   }
 }

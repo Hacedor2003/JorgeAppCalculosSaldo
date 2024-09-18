@@ -11,3 +11,10 @@ export interface Operacion_Interface {
 }
 
 export interface Operacion_Interface_Model extends Optional<Operacion_Interface, 'ID_Operacion'> {}
+
+export interface Saldo_Interface {
+  ID_Saldo: number;
+  cantidad:number
+}
+
+export interface Saldo_Interface_Model extends Optional<Saldo_Interface, 'ID_Saldo'> {}
