@@ -39,6 +39,13 @@ import {
 } from './lib'
 import { editHistoria_Accciones_By_Id, editUsuario_By_Id } from './lib/Hook_Edit'
 import { Notifier } from './lib/Notifier'
+import {
+  getAllOperaciones,
+  getOperacionById,
+  deleteOperacion,
+  updateOperacion,
+  createOperacion
+} from './lib/CRUDS'
 
 function createWindow(): void {
   // Create the browser window.
@@ -106,53 +113,18 @@ app.whenReady().then(async () => {
 
   // IPC
 
-  //Get
-  ipcMain.handle('getProductos_All', () => getProductos_All())
-  ipcMain.handle('getVentas_All', () => getVentas_All())
-  ipcMain.handle('getVenta_By_Id', (_, id) => getVenta_By_Id(id))
-  ipcMain.handle('getProductos_By_Id', (_, id) => getProductos_By_Id(id))
-  ipcMain.handle('getComponentes_All', () => getComponentes_All())
-  ipcMain.handle('getComponente_By_Id', (_, id) => getComponente_By_Id(id))
-  ipcMain.handle('getClientes_All', () => getClientes_All())
-  ipcMain.handle('getCliente_By_Id', (_, id) => getCliente_By_Id(id))
-  ipcMain.handle('getHistorial_Ventas_All', () => getHistorial_Ventas_All())
-  ipcMain.handle('getHistorial_Ventas_By_Cliente', (_, cliente) =>
-    getHistorial_Ventas_By_Cliente(cliente)
-  )
-  ipcMain.handle('getHistorial_Ventas_By_Id', (_, id) => getHistorial_Ventas_By_Id(id))
-  ipcMain.handle('getAllHistorialAcciones', () => getAllHistorialAcciones())
-  ipcMain.handle('getHistorialAccion_By_Id', (_, id) => getHistorialAccion_By_Id(id))
-  ipcMain.handle('getAllUsuarios', () => getAllUsuarios())
-  ipcMain.handle('getUsuario_By_Id', (_, id) => getUsuario_By_Id(id))
+  // Get
+  ipcMain.handle('getAllOperaciones', () => getAllOperaciones())
+  ipcMain.handle('getOperacion_By_Id', (_, id) => getOperacionById(id))
 
-  //Delete
-  ipcMain.handle('deleteVenta_By_Id', (_, id) => deleteVenta_By_Id(id))
-  ipcMain.handle('deleteProducto_By_Id', (_, id) => deleteProducto_By_Id(id))
-  ipcMain.handle('deleteComponente_By_Id', (_, id) => deleteComponente_By_Id(id))
-  ipcMain.handle('deleteCliente_By_Id', (_, id) => deleteCliente_By_Id(id))
-  ipcMain.handle('deleteHistorial_By_Id', (_, id) => deleteHistorial_By_Id(id))
+  // Delete
+  ipcMain.handle('deleteOperacion_By_Id', (_, id) => deleteOperacion(id))
 
-  //Edit
-  ipcMain.handle('editVenta_By_Id', (_, id, updated) => editVenta_By_Id(id, updated))
-  ipcMain.handle('editProducto_By_Id', (_, id, updated) => editProducto_By_Id(id, updated))
-  ipcMain.handle('editCliente_By_Id', (_, id, updated) => editCliente_By_Id(id, updated))
-  ipcMain.handle('editComponente_By_Id', (_, id, updated) => editComponente_By_Id(id, updated))
-  ipcMain.handle('editHistorial_Venta_By_Id', (_, id, updated) =>
-    editHistorial_Venta_By_Id(id, updated)
-  )
-  ipcMain.handle('editHistoria_Accciones_By_Id', (_, id, updated) =>
-    editHistoria_Accciones_By_Id(id, updated)
-  )
-  ipcMain.handle('editUsuario_By_Id', (_, id, updated) => editUsuario_By_Id(id, updated))
+  // Edit
+  ipcMain.handle('editOperacion_By_Id', (_, id, updated) => updateOperacion(id, updated))
 
-  //Create
-  ipcMain.handle('createVenta', (_, newData) => createVenta(newData))
-  ipcMain.handle('createProducto', (_, newData) => createProducto(newData))
-  ipcMain.handle('createComponente', (_, newData) => createComponente(newData))
-  ipcMain.handle('createHistorial', (_, newData) => createHistorial(newData))
-  ipcMain.handle('createCliente', (_, newData) => createCliente(newData))
-  ipcMain.handle('createHistorial_Acciones', (_, newData) => createHistorial_Acciones(newData))
-  ipcMain.handle('createUsuarios', (_, newData) => createUsuarios(newData))
+  // Create
+  ipcMain.handle('createOperacion', (_, newData) => createOperacion(newData))
 
   createWindow()
 

@@ -2,3 +2,7 @@
 h2 {
   @apply text-2xl font-bold text-start px-2
 }
+
+.contenedor-item-operaciones {
+  @apply w-full flex flex-row items-center justify-between px-2
+}
